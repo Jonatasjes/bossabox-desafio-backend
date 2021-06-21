@@ -40,4 +40,18 @@ describe('Add tools controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamsError('link'))
   })
+
+  test('Should return 400 if no description is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        title: 'any_title',
+        link: 'any_link',
+        tags: ['any_tags']
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamsError('description'))
+  })
 })
