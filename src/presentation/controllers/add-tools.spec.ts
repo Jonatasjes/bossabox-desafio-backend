@@ -1,9 +1,20 @@
 import { MissingParamsError } from '../errors/missing-params-error'
 import { AddToolsController } from './add-tools'
 
+interface SutTypes {
+  sut: AddToolsController
+}
+
+const makeSut = (): SutTypes => {
+  const sut = new AddToolsController()
+  return {
+    sut
+  }
+}
+
 describe('Add tools controller', () => {
   test('Should return 400 if no title is provided', async () => {
-    const sut = new AddToolsController()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         link: 'any_link',
