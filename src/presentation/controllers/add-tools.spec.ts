@@ -1,3 +1,4 @@
+import { InvalidTagsParamError } from '../errors/invalid-tags-params-error'
 import { MissingParamsError } from '../errors/missing-params-error'
 import { AddToolsController } from './add-tools'
 
@@ -67,5 +68,20 @@ describe('Add tools controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamsError('tags'))
+  })
+
+  test('Should return 400 if tags is no a array of strings', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        title: 'any_title',
+        link: 'any_link',
+        description: 'any_description',
+        tags: 'invalid_tags'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidTagsParamError())
   })
 })
