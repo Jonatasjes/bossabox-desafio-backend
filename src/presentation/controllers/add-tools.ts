@@ -1,3 +1,4 @@
+import { InvalidTagsParamError } from '../errors/invalid-tags-params-error'
 import { MissingParamsError } from '../errors/missing-params-error'
 import { badRequest, serverError } from '../helpers/http-helper'
 import { Controller } from '../protocols/controller'
@@ -12,6 +13,10 @@ export class AddToolsController implements Controller {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamsError(field))
         }
+      }
+
+      if (!Array.isArray(httpRequest.body.tags)) {
+        return badRequest(new InvalidTagsParamError())
       }
     } catch (error) {
       return serverError()
