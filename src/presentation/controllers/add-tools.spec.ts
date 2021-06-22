@@ -127,4 +127,26 @@ describe('Add tools controller', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        title: 'valid_title',
+        link: 'valid_link',
+        description: 'valid_description',
+        tags: ['valid_tags']
+      }
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      id: 'valid_id',
+      title: 'valid_title',
+      link: 'valid_link',
+      description: 'valid_description',
+      tags: ['valid_tags']
+    })
+  })
 })
