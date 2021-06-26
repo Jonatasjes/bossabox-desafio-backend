@@ -8,7 +8,6 @@ export class ToolMongoRepository implements AddToolRepository {
     const toolCollection = MongoHelper.getCollection('tools')
     const result = await toolCollection.insertOne(toolData)
     const tool = result.ops[0]
-    const { _id, ...toolWithoutId } = tool
-    return Object.assign({}, toolWithoutId, { id: _id })
+    return MongoHelper.map(tool)
   }
 }
