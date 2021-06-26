@@ -9,8 +9,12 @@ describe('Tool Mongo Repository', () => {
     await MongoHelper.disconnect()
   })
 
+  const makeSut = (): ToolMongoRepository => {
+    return new ToolMongoRepository()
+  }
+
   test('Should return an account on success', async () => {
-    const sut = new ToolMongoRepository()
+    const sut = makeSut()
     const tool = await sut.add({
       title: 'any_title',
       link: 'any_link',
