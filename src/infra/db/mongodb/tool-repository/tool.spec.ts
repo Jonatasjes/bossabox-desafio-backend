@@ -9,6 +9,11 @@ describe('Tool Mongo Repository', () => {
     await MongoHelper.disconnect()
   })
 
+  beforeEach(async () => {
+    const toolCollection = MongoHelper.getCollection('tools')
+    await toolCollection.deleteMany({})
+  })
+
   const makeSut = (): ToolMongoRepository => {
     return new ToolMongoRepository()
   }
